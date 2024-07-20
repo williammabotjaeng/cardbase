@@ -206,15 +206,25 @@ def register():
             db.session.add(new_user)
             db.session.commit()
 
-            message_body = """We are thrilled to welcome you to CardBase, the revolutionary web app that is set to transform the way you generate invoices. With CardBase, you can harness the power of voice commands to streamline your billing process and save valuable time and effort.\nInspired by the capabilities of AI, CardBase seamlessly combines ancient wisdom with cutting-edge technology to simplify your invoicing tasks. Our app empowers you to effortlessly create and manage invoices using your voice, allowing you to multitask and focus on what truly matters in your everyday life.
-            \nFrom freelancers to small businesses, CardBase is designed to cater to your invoicing needs. Whether you\'re on the go or tied up with other responsibilities, CardBase lets you stay on top of your billing tasks with ease, all at the convenience of a few simple voice commands.
-            \nWe invite you to embrace the efficiency and convenience of CardBase today. Experience a new level of productivity as you navigate the world of invoice generation with ease and simplicity.
-            \nTo get started, simply visit our website and follow the quick and easy registration process. Once you're in, you'll have access to a range of powerful features and tools designed to enhance your invoicing experience.
-            \nIf you have any questions or need assistance, our dedicated support team is here to help. Don't hesitate to reach out to us at CardBase@gmail.com.
-            \nThank you for choosing CardBase as your go-to invoicing companion. We're excited to have you on board and can't wait to witness the positive impact CardBase will have on your invoicing workflow.
-            \nWishing you success and efficiency in all your invoicing endeavors!
-            \nBest regards,
-            \n\nCardBase Team"""
+            message_body = """We are excited to introduce you to CardBase, the innovative flashcard platform that will revolutionize the way you learn. With CardBase, you can tap into the vast resources of YouTube, web pages, and social media to generate personalized flashcards that cover any subject matter you desire.
+
+By leveraging the power of AI, CardBase seamlessly combines the wisdom of centuries with state-of-the-art technology to simplify your learning experience. Our platform empowers you to effortlessly create and manage flashcards using your voice, allowing you to learn on the go and make the most of your valuable time.
+\n
+Whether you're a student, a professional, or simply someone passionate about continuous learning, CardBase is designed to cater to your needs. With our platform, you can access a wealth of knowledge from various sources and compile it into engaging flashcards, all at the convenience of a few simple voice commands.
+
+We invite you to embrace the efficiency and convenience of CardBase today. Experience a new level of productivity as you explore any subject matter with ease and simplicity. 
+\n
+To get started, simply visit our user-friendly website and follow our quick and hassle-free registration process. Once you're in, you'll gain access to a range of powerful features and tools designed to enhance your learning experience.
+
+If you have any questions or need assistance, our dedicated support team is here to help. Feel free to reach out to us at **CardBase@gmail.com**, and we'll be delighted to assist you.
+\n
+Thank you for choosing CardBase as your go-to flashcard platform. We are thrilled to have you on board and cannot wait to witness the positive impact CardBase will have on your learning journey.
+
+Wishing you success and fulfillment as you embark on your quest for knowledge!
+\n
+Best regards,
+\n
+CardBase Team"""
           
             # Send email to the new user
             msg = Message(
@@ -228,15 +238,13 @@ def register():
             flash('Registration successful! An email has been sent to your email address.')
             user = User.query.filter_by(email=email).first()
             login_user(user)
-            print("User Created")
             return redirect(url_for('home'))
     return render_template("register.html", form=form)
 
 @login_required
 @app.route("/home")
 def home():
-    form = CustomerForm()
-    return render_template("home.html", current_user=current_user, form=form)
+    return render_template("home.html", current_user=current_user)
 
 @app.route("/create_invoice", methods=["GET", "POST"])
 @login_required
