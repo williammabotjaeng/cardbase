@@ -2,83 +2,17 @@
 {% block content %}
 <div class="columns is-variable is-1-mobile is-0-tablet is-3-desktop is-8-widescreen is-2-fullhd tile" style="margin: 10px; color: white">
     <div class="column tile blue">
-        <form action="{{ url_for('create_contact') }}" class="form" method="POST" style="margin-top: 5px; color: white">
-            {{ form.csrf_token }}
-            <div class="field">
-                <label class="label">First Name</label>
-                <div class="control">
-                    {{ form.first_name(class="input white p-1", placeholder="Enter First Name") }}
-                </div>
-            </div>
-            <div class="field">
-                <label class="label">Contact Type</label>
-                <div class="control">
-                    <div>
-                        {{ form.contact_type(class="input white p-1") }}
-                    </div>
-                </div>
-            </div>
-            <div class="field">
-                <label class="label">Email</label>
-                <div class="control">
-                    {{ form.email(class="input white p-1", placeholder="Enter email") }}
-                </div>
-            </div>
-            <div class="field">
-                <label class="label">IP Address</label>
-                <div class="control">
-                    {{ form.ip_address(class="input white p-1", placeholder="Enter IP address") }}
-                </div>
-            </div>
-            <div class="field">
-                <div class="control">
-                    {{ form.submit(class="button is-primary", value="Create Contact") }}
-                </div>
-            </div>
-        </form>        
+        
     </div>
     <div class="column tile purple">
         <div class="heading">All Contacts</div>
-        <div class="tile" style="margin-top: 20px">
-            {% if contacts %}
-        <ul>
-            {% for contact in contacts %}
-                <li><strong class="has-text-white">{{ contact.first_name.capitalize() }}</strong> - <em>{{ contact.status if contact.status else "Pending" }}</em></li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <h1>No contacts yet, Try Create a New Contact!</h1>
-    {% endif %}
-        </div>
-
+           
     </div>
     <div class="column tile teal">
-        <div class="heading">Trusted Contacts</div>
-        <div class="tile" style="margin-top: 20px">
-            {% if trusted_contacts %}
-        <ul>
-            {% for contact in trusted_contacts %}
-                <li><strong class="has-text-white">{{ contact.first_name.capitalize() }}</strong> - <em>{{ contact.status if contact.status else "Pending" }}</em></li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <h1>No contacts yet, Try Validating your Contacts!</h1>
-    {% endif %}
-        </div>
+        
     </div>
     <div class="column tile deep-orange">
-        <div class="heading">Untrusted Contacts</div>
-        <div class="tile" style="margin-top: 20px">
-            {% if untrusted_contacts %}
-        <ul>
-            {% for contact in untrusted_contacts %}
-                <li><strong class="has-text-white">{{ contact.first_name.capitalize() }}</strong> - <em>{{ contact.status if contact.status else "Pending" }}</em></li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <h1>No contacts yet, Try Validating your Contacts!</h1>
-    {% endif %}
-        </div>
+       
     </div>
 </div>
 {% endblock %}

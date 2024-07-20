@@ -236,10 +236,7 @@ def register():
 @app.route("/home")
 def home():
     form = CustomerForm()
-    api_key_res = create_api_key(app.config["PROJECT_ID"], "billium")
-    print("API KEY Response", api_key_res)
-    customers = Customer.query.filter_by(user_id=current_user.id).all()
-    return render_template("home.html", current_user=current_user, form=form, customers=customers)
+    return render_template("home.html", current_user=current_user, form=form)
 
 @app.route("/create_invoice", methods=["GET", "POST"])
 @login_required
