@@ -43,78 +43,25 @@ class User(UserMixin, db.Model):
     last_name = db.Column(db.String(20), nullable=True)
     password = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(100), nullable=False)
-    phone_number = db.Column(db.String(15))
-    address = db.Column(db.String(200))
-    session_engaged = db.Column(db.Boolean, default=False)
-    engaged_customer_id = db.Column(db.Integer, db.ForeignKey('customer.id'))
-    engaged_product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
-    engaged_invoice_item_id = db.Column(db.Integer, db.ForeignKey('invoice_item.id'))
-    active_invoice_id = db.Column(db.Integer, db.ForeignKey('invoice.id'))
+     
+    flash_cards = db.relationship('FlashCard', backref='user', lazy=True)
 
-class Customer(db.Model):
+
+
+class FlashCard(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String(100), nullable=True)
-    last_name = db.Column(db.String(100), nullable=True)
-    email = db.Column(db.String(100), nullable=False)
-    phone_number = db.Column(db.String(15))
-    address = db.Column(db.String(200))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    
+    entries = db.relationship('FlashCardEntry', backref='flashcard', lazy=True)
 
-    invoices = db.relationship('Invoice', backref='customer', lazy=True)
-    payment_methods = db.relationship('PaymentMethod', backref='customer', lazy=True, cascade='all, delete-orphan')
-    payments = db.relationship('Payment', backref='customer', lazy=True)
-
-class Product(db.Model):
+class FlashCardEntry(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    price = db.Column(db.Float, nullable=False)
-    description = db.Column(db.String(200))
-    category = db.Column(db.String(50))
-    image_url = db.Column(db.String(200))
-    sku_code = db.Column(db.String(50))
+    term = db.Column(db.String(255), nullable=False)
+    definition = db.Column(db.String(255), nullable=False)
 
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    flashcard_id = db.Column(db.Integer, db.ForeignKey('flash_card.id'), nullable=False)
 
-    # Add any other fields relevant to the product model
-    def __repr__(self):
-        return f"Product(id={self.id}, name='{self.name}', price={self.price})"
 
-class Invoice(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    customer_id = db.Column(db.Integer, db.ForeignKey('customer.id'), nullable=False)
-    order_id = db.Column(db.String(20), nullable=False)
-    invoice_date = db.Column(db.DateTime)
-    total_amount = db.Column(db.Float)
-    status = db.Column(db.String(20), nullable=False)
-    shipping_address = db.Column(db.String(200))
-    billing_address = db.Column(db.String(200))
-    payment_method_id = db.Column(db.Integer, db.ForeignKey('payment_method.id'))
-
-    items = db.relationship('InvoiceItem', backref='invoice', lazy=True)
-
-class InvoiceItem(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    invoice_id = db.Column(db.Integer, db.ForeignKey('invoice.id'), nullable=False)
-    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
-    quantity = db.Column(db.Integer)
-
-class PaymentMethod(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    customer_id = db.Column(db.Integer, db.ForeignKey('customer.id'), nullable=False)
-    payment_type = db.Column(db.String(20), nullable=False)
-
-class Payment(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    customer_id = db.Column(db.Integer, db.ForeignKey('customer.id'), nullable=False)
-    payment_method_id = db.Column(db.Integer, db.ForeignKey('payment_method.id'), nullable=False)
-    invoice_id = db.Column(db.Integer, db.ForeignKey('invoice.id'), nullable=False)
-    amount = db.Column(db.Float, nullable=False)
-    date = db.Column(db.Date, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-
-    payment_method = db.relationship('PaymentMethod', backref='payments')
-    invoice = db.relationship('Invoice', backref='payments')
-    user = db.relationship('User', backref='payments')
 
 with app.app_context():
     db.create_all()
