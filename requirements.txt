@@ -1,1 +1,9 @@
 Flask
+Flask-Login
+Flask-SQLAlchemy
+Flask-WTF
+python-dotenv
+gunicorn
+Flask-Mail
+moment
+Werkzeug==2.3.0
