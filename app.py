@@ -8,6 +8,8 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField, Selec
 from wtforms.validators import InputRequired, Length, DataRequired, Email
 from dotenv import load_dotenv
 
+from openai import OpenAI
+
 import argparse
 
 
@@ -31,6 +33,8 @@ app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD") # Replace with your ema
 
 
 mail = Mail(app)
+
+client = OpenAI()
 
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
