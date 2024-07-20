@@ -224,7 +224,7 @@ def register():
           
             # Send email to the new user
             msg = Message(
-                subject="Welcome to CardBase - Simplify Invoice Generation with Voice Commands!",
+                subject="Welcome to CardBase - Simply Learning! Amplify Knowledge!",
                 sender=app.config["MAIL_USERNAME"],
                 recipients=[email],
                 body=f"Hi {email},\n\n{message_body}"
