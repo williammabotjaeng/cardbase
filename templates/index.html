@@ -17,14 +17,14 @@
       </section>
   </div>
   <div class="col s6">
-        <img src="{{ url_for('static', filename='img/hero-image.png') }}" alt="hero-image" style="margin-top: 10px;"/>
+        <img src="{{ url_for('static', filename='img/stickers.jpg') }}" alt="hero-image" style="margin-top: 10px; height: 5%"/>
   </div>
 {% endblock %}
 
 {% block content %}
 <div class="row landing-page-content">
   <div class="col login-area">
-    <h2 style="color: #48c78e; font-weight: bold;">Get Started</h2>
+    <h2 style="color: #3da121; font-weight: bold;">Get Started</h2>
     <br>
     <form method="POST" action="{{ url_for('register') }}">
     {{ form.csrf_token }}
