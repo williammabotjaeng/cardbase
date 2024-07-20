@@ -7,18 +7,12 @@ from flask_mail import Message, Mail
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField, TextAreaField, FloatField
 from wtforms.validators import InputRequired, Length, DataRequired, Email
 from dotenv import load_dotenv
-from datetime import datetime
-
-from datetime import date
 
 import argparse
 
 
 import moment
-import requests
 import os
-
-from square.client import Client
 
 app = Flask(__name__)
 
