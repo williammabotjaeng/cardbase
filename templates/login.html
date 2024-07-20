@@ -1,0 +1,66 @@
+{% extends 'layout.html' %}
+
+{% block header %}
+  <h1>{% block title %}{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<div class="row landing-page-content" style="margin-top: 40px;">
+    <div class="col login-area">
+      <h2 style="color: #48c78e; font-weight: bold;">Login</h2>
+      <br>
+      <form action="{{ url_for('login') }}" method="POST">
+      {{ form.csrf_token }}
+      <div class="field">
+          <p class="control has-icons-left has-icons-right">
+          {{ form.email(class="input", placeholder="Email") }}
+          <span class="icon is-small is-left">
+              <i class="fas fa-envelope"></i>
+          </span>
+          <span class="icon is-small is-right">
+              <i class="fas fa-check"></i>
+          </span>
+          </p>
+      </div>
+      <div class="field">
+          <p class="control has-icons-left">
+          {{ form.password(class="input", placeholder="Password") }}
+          <span class="icon is-small is-left">
+              <i class="fas fa-lock"></i>
+          </span>
+          </p>
+      </div>
+      <div class="field">
+          <p class="control">
+              <input class="button is-success" type="submit" value="Sign In">
+          </p>
+      </div>
+      </form>
+    </div>
+    <div class="col quote-links">
+      <div class="card" style="height: 40vh;">
+          <div class="card-content">
+            <p class="title">
+              “You don't understand anything until you learn it more than one way.”
+            </p>
+            <br>
+            <p class="subtitle">
+               - Marvin Minsky
+            </p>
+          </div>
+          <footer class="card-footer">
+            <p class="card-footer-item">
+              <span>
+                Not yet Registered? <a href="/register">Register</a>
+              </span>
+            </p>
+            <p class="card-footer-item">
+              <span>
+                Need Help? <a href="mailto:williammabotjaeng">Get in touch!</a>
+              </span>
+            </p>
+          </footer>
+        </div>
+    </div>
+  </div>
+{% endblock %}
