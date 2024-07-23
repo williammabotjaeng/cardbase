@@ -12,6 +12,10 @@
     font-size: larger;
 }
 
+#form-area {
+    margin-top: 3%;
+}
+
 .mixed-text {
     justify-content: center;
     align-items: center;

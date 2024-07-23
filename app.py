@@ -198,7 +198,7 @@ def home():
 @login_required
 def create_set():
     current_user.session_engaged = True
-    print(current_user.session_engaged)
+    form = FlashCardSetForm()
     if request.method == "POST":
         user_id = current_user.id
         set_title = request.form.get("set_title")
@@ -221,7 +221,7 @@ def create_set():
 
         return redirect(url_for("flash_card_sets"))
     
-    return render_template("create_set.html", current_user=current_user)
+    return render_template("create_set.html", current_user=current_user, form=form)
 
 @app.route("/create_product", methods=["GET", "POST"])
 @login_required

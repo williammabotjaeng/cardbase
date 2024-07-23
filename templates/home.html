@@ -12,7 +12,8 @@
               <p class="text-center empty-state-text">No flash card sets available.</p>
               <br />
               <div class="text-center">
-               <button class="button large is-success">Create</button>&nbsp;&nbsp;<p class="mixed-text">your first Flashcard Set!</p>
+                <a href="{{ url_for('create_set') }}" class="button large is-success">Create</a>
+                <p class="mixed-text">your first Flashcard Set!</p>
               </div>
             </div>
             {% endif %}
