@@ -1,0 +1,45 @@
+{% extends 'app_layout.html' %}
+{% block content %}
+<div style="margin: 10px">
+    <h1 class="heading" id="flashcardsets-heading">Your FlashCard Sets</h1>
+        <div class="main-home">
+            {% if flash_card_sets %}
+            <table class="striped hover is-hoverable ">
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Practice</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for flash_card_set in flash_card_sets %}
+                  <tr>
+                    <td>{{ flash_card_set.set_title }}</td>
+                    <td>{{ flash_card_set.set_description }}</td>
+                    <td><a href="{{ url_for('practice_flash_card_set', set_id=flash_card_set.id) }}">Practice</a></td>
+                    <td><a href="{{ url_for('edit_flash_card_set', set_id=flash_card_set.id) }}">Edit</a></td>
+                    <td><a href="{{ url_for('delete_flash_card_set', set_id=flash_card_set.id) }}">Delete</a></td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              <br>
+              <div class="is-centered">
+                <a href="{{ url_for('create_set') }}" class="button large is-success">Create</a>
+              </div>
+            {% else %}
+            <div>
+              <p class="text-center empty-state-text">No flash card sets available.</p>
+              <br />
+              <div class="text-center">
+                <a href="{{ url_for('create_set') }}" class="button large is-success">Create</a>
+                <p class="mixed-text">your first Flashcard Set!</p>
+              </div>
+            </div>
+            {% endif %}
+          </div>
+</div>
+{% endblock %}

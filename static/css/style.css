@@ -1,0 +1,187 @@
+.primary-bg {
+    background-color: #3da121;
+}
+
+#primary-btn {
+    background-color: #3da121;
+    color: white;
+}
+
+#flashcardsets-heading {
+    text-align: center;
+    margin: 1%;
+    font-size: 2em;
+}
+
+.empty-state-text {
+    margin-top: 10%;
+    font-size: larger;
+}
+
+#form-area {
+    margin-top: 3%;
+}
+
+.mixed-text {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.save-flashcard-entries {
+    background-color: #3da121;
+    color: white;
+    padding: 5px;
+    border-radius: 10px;
+    margin: 5px;
+}
+
+.save-flashcard-entries:visited, .save-flashcard-entries:hover {
+    color: white;
+}
+
+.main-home {
+    justify-content: center;
+    align-items: center;
+}
+
+.delete-flashcard-entry {
+    color: white;
+    background-color: red;
+    padding: 5px;
+    margin: 5px;
+}
+
+.layout-footer {
+    position: fixed;
+    bottom: 0px;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    background-color: #3da121;
+    width: 100%;
+    height: 10vh;
+    padding: 20px;
+    color: white;
+}
+
+.main-nav {
+    align-items: center;
+}
+
+#nav-main-menu {
+    margin-left: 640px;
+}
+
+#nav-main-menu-app {
+    margin-left: 440px;
+}
+
+.login-button {
+    margin-left: 20px;
+}
+
+.main-header {
+    margin-top: 10px;
+}
+
+.landing-page-content {
+    display: flex;
+    flex-direction: row;
+}
+
+.login-area {
+    width: 40%;
+    height: 60vh;
+    margin-left: 40px;
+    margin-top: 40px;
+}
+
+.quote-links {
+    width: 40%;
+    height: 60vh;
+    margin-left: 140px;
+    margin-top: 10px;
+}
+
+.tall-textarea {
+    height: 160px;
+    padding: 4px;
+}
+
+.centered-cells {
+    justify-content: center;
+    align-items: center;
+}
+
+.action-btn {
+    border: none;
+    background-color: none;
+}
+
+.flashcard-container {
+    width: 60%;
+    height: 300px;
+    border: 1px solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 80px 0px 10px 200px;
+    border-radius: 10px;
+    perspective: 1000px; /* Enable 3D perspective */
+}
+.flashcard {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d; /* Enable 3D transformations */
+    transition: transform 0.6s;
+    border: #3da121;
+}
+.flashcard.flipped {
+    transform: rotateY(180deg); /* Flip the card */
+}
+.front, .back {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    backface-visibility: hidden; /* Hide the back of the card */
+    border: #3da121;
+}
+.front {
+    background-color: #fff;
+    border: 2px groove #3da121;
+    padding: 20px;
+    font-size: 16px;
+}
+.back {
+    background-color: #f0f0f0;
+    transform: rotateY(180deg); /* Initially hide the back of the card */
+    border: 2px solid #3da121;
+    padding: 20px;
+    font-size: 16px;
+}
+
+#next-button {
+    display: block;
+    background-color: #3da121;
+    color: white;
+}
+
+#term {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#definition {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#youtube:hover, #web:hover, #social:hover, #textoption:hover {
+    background-color: #3da121;
+    opacity: 50%;
+}

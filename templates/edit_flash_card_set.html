@@ -1,0 +1,143 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    <br>
+    <div class="columns is-centered">
+        <div class="column is-half">
+            <h5 class="title is-5">Edit Flashcard Set</h5>
+            <form action="{{ url_for('edit_flash_card_set', set_id=flash_card_set.id) }}" method="POST">
+                {{ form.csrf_token }}
+                <div class="field">
+                    <label class="heading">Set Title</label>
+                    <div class="control">
+                        {{ form.set_title(class="input") }}
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="heading">Set Description</label>
+                    <div class="control">
+                        {{ form.set_description(class="textarea") }}
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        {{ form.submit(class="button is-primary") }}
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <br>
+    
+    <div class="columns is-centered">
+        <div class="column is-half">
+            <h5 class="title is-5">Flashcard Entries</h3>
+            <div id="flashcard-entries">
+                <br>
+                <!-- Flashcard entry items will be dynamically added here -->
+            </div>
+            <button class="button is-primary" id="add-flashcard-entry">Add Flashcard Entry</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    var flashcardEntries = document.getElementById("flashcard-entries");
+    var addFlashcardEntryButton = document.getElementById("add-flashcard-entry");
+    var saveButton = document.createElement("a");
+    saveButton.textContent = "Save";
+    saveButton.classList.add("save-flashcard-entries");
+    saveButton.href = "#";  // Set the href attribute to "#" for demonstration purposes
+
+    var entryCount = 0;
+
+    addFlashcardEntryButton.addEventListener("click", function() {
+        entryCount++;
+
+        var entry = document.createElement("div");
+        entry.innerHTML = `
+            <div class="flashcard-entry" id="flashcard-entry-${entryCount}">
+                <br>
+                ${entryCount}.
+                <div class="field">
+                    <label class="heading large">Term</label>
+                    <div class="control">
+                        <input type="text" name="flashcard_term_${entryCount}" class="input">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="heading large">Definition</label>
+                    <div class="control">
+                        <input type="text" name="flashcard_definition_${entryCount}" class="input">
+                    </div>
+                </div>
+                <button class="delete-flashcard-entry" data-entry-id="${entryCount}">Delete</button>
+            </div>
+        `;
+
+        flashcardEntries.appendChild(entry);
+    });
+
+    // Add event delegation for delete buttons
+    flashcardEntries.addEventListener("click", function(event) {
+        if (event.target.classList.contains("delete-flashcard-entry")) {
+            var entryId = event.target.getAttribute("data-entry-id");
+            var entryToRemove = document.getElementById(`flashcard-entry-${entryId}`);
+            if (entryToRemove) {
+                entryToRemove.remove();
+            }
+        }
+    });
+
+    function getRouteIdFromUrl() {
+        var url = window.location.href;
+        var id = url.substring(url.lastIndexOf('/') + 1);
+        return id;
+    }
+
+    var routeId = getRouteIdFromUrl();
+
+    // Append the Save button to the flashcard entries form
+    flashcardEntries.appendChild(saveButton);
+
+    // Add event listener for the Save button
+    saveButton.addEventListener("click", function() {
+    // Capture the flashcard entries and send them to the server
+    var flashcardData = [];
+    var flashcardEntryElements = document.querySelectorAll(".flashcard-entry");
+    flashcardEntryElements.forEach(function(entry) {
+        var termInput = entry.querySelector(`[name^="flashcard_term_"]`);
+        var definitionInput = entry.querySelector(`[name^="flashcard_definition_"]`);
+        if (termInput && definitionInput) {
+            flashcardData.push({
+                term: termInput.value,
+                definition: definitionInput.value,
+                flashcard_set_id: routeId 
+            });
+        }
+    });
+
+    // Send the flashcardData to the server using an HTTP request (e.g., fetch or XMLHttpRequest)
+    console.log("Flash Card Data", flashcardData)
+    fetch('/save_flashcard_entries', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(flashcardData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("Card Data", data);  
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+   });
+});
+</script>
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    <br>
+    <div class="columns is-centered" id="form-area">
+        <div class="column is-half">
+            <h3 class="title is-3">Create a Flashcard Set</h3>
+            <form action="{{ url_for('create_set') }}" method="POST">
+                {{ form.csrf_token }}
+                <div class="field">
+                    <label class="heading large">Set Title</label>
+                    <div class="control">
+                        {{ form.set_title(class="input") }}
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="heading large">Set Description</label>
+                    <div class="control">
+                        {{ form.set_description(class="textarea") }}
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        {{ form.submit(class="button is-primary") }}
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="column is-half is-centered" style="padding: 160px;">
+            <form action="{{ url_for('create_with_ai') }}" method="get">
+                {{ form.csrf_token }}
+                <div class="field">
+                    <div class="control">
+                        <button class="button large is-primary" type="submit">Create with AI</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

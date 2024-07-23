@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/cardbase-icon.ico') }}" type="image/icon">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.8.1/dist/css/foundation.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma-rtl.min.css">
+    <title>CardBase | Amplify Knowledge</title>
+</head>
+<body>
+    <nav class="navbar main-nav" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+          <a class="" href="/">
+            <img src="{{ url_for('static', filename='img/cardbase-emblem.png') }}" alt="Logo" style="margin-left: 10px;" width="64" height="88">
+          </a>
+      
+          <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
+        </div>
+      
+        <div id="nav-main-menu" class="navbar-menu">
+          <div class="navbar-start">
+            <a href="/" class="navbar-item">
+              Home
+            </a>
+      
+            <a href="/docs" class="navbar-item">
+              Documentation
+            </a>
+      
+            <div class="navbar-item has-dropdown is-hoverable">
+              <a class="navbar-link">
+                More
+              </a>
+      
+              <div class="navbar-dropdown">
+                <a href="/what" class="navbar-item">
+                  What is TopLock?
+                </a>
+                <a href="/getintouch" class="navbar-item">
+                  Get in Touch
+                </a>
+                <hr class="navbar-divider">
+                <a href="mailto:williammabotjaeng@gmail.com" class="navbar-item">
+                  Report an issue
+                </a>
+              </div>
+            </div>
+          </div>
+          {% if not current_user.is_authenticated %}
+          <div class="navbar-end">
+            <div class="navbar-item">
+              <div class="buttons">
+                <a href="/register" class="button" style="background-color: #3da121;">
+                  <strong style="color: white">Sign up</strong>
+                </a>
+                <a href="/login" class="button is-light login-button">
+                  Log in
+                </a>
+              </div>
+            </div>
+          </div>
+          {% else %}
+          <div class="navbar-end">
+            <div class="navbar-item">
+              <div class="buttons">
+                <a href="/flash_card_sets" class="button is-primary">
+                  <strong>FlashCards</strong>
+                </a>
+                <a href="/logout" class="button is-light login-button">
+                  Logout
+                </a>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+
+        </div>
+      </nav>
+      <header class="primary-bg container row s12" style="width: 100%">
+        {% block header %}{% endblock %}
+      </header> 
+      <main style="width: 100%; overflow-y: auto; margin-bottom: 3%;">
+        {% block content %}{% endblock %}
+      </main>
+<footer class="layout-footer">
+    <p>Copyright &copy; 2023 CardBase</p>
+</footer>  
+   <!-- Compiled and minified JavaScript -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>
