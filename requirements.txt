@@ -8,3 +8,4 @@ Flask-Mail
 moment
 Werkzeug==2.3.0
 beautifulsoup4
+openai

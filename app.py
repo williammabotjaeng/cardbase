@@ -1,3 +1,4 @@
+import datetime
 from flask import Flask, render_template, redirect, url_for, flash, request
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from flask_sqlalchemy import SQLAlchemy
@@ -52,10 +53,14 @@ class User(UserMixin, db.Model):
 
 
 
-class FlashCard(db.Model):
+class FlashCardsSet(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    
+    set_title = db.Column(db.String(255), nullable=False)
+    set_description = db.Column(db.String(255), nullable=False)
+    set_creation_date = db.Column(db.Date, nullable=False, default=datetime.utcnow)
+    set_modified_date = db.Column(db.Date, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
+
     entries = db.relationship('FlashCardEntry', backref='flashcard', lazy=True)
 
 class FlashCardEntry(db.Model):
@@ -195,7 +200,9 @@ CardBase Team"""
 @login_required
 @app.route("/home")
 def home():
-    return render_template("home.html", current_user=current_user)
+    user_id = current_user.id 
+    flashcards = FlashCardsSet.query.filter_by(user_id=user_id).all()
+    return render_template("home.html", current_user=current_user, flashcards_set=flashcards_set)
 
 @app.route("/create_invoice", methods=["GET", "POST"])
 @login_required
