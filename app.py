@@ -200,11 +200,12 @@ def create_set():
     current_user.session_engaged = True
     form = FlashCardSetForm()
     if request.method == "POST":
+        print(request.form)
         user_id = current_user.id
         set_title = request.form.get("set_title")
         set_description = request.form.get("set_description")
-        set_creation_date = moment.now().date()
-        set_modified_date = moment.now().date()
+        set_creation_date = moment.now().date
+        set_modified_date = moment.now().date
 
         new_set = FlashCardSet(
             user_id=user_id,
