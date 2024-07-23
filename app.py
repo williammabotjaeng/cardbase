@@ -191,8 +191,8 @@ CardBase Team"""
 @app.route("/home")
 def home():
     user_id = current_user.id 
-    flashcard_sets = FlashCardSet.query.filter_by(user_id=user_id).all()
-    return render_template("home.html", current_user=current_user, flashcard_sets=flashcard_sets)
+    flash_card_sets = FlashCardSet.query.filter_by(user_id=user_id).all()
+    return render_template("home.html", current_user=current_user, flash_card_sets=flash_card_sets)
 
 @app.route("/create_set", methods=["GET", "POST"])
 @login_required
@@ -261,16 +261,7 @@ def create_product():
     return render_template("create_product.html", form=form, current_user=current_user)
 
 
-@app.route("/start_invoice", methods=["GET", "POST"])
-def start_invoice():
-    audio_file = request.files["file"]
-    print("Audio File", type(audio_file))
 
-    audio_file.save('temp.wav')
-    
-    transcribe_streaming_v2(str(app.config["PROJECT_ID"]), "temp.wav")
-    redirect(url_for("customers"))
-    return "Success", 200
 
 @app.route("/what")
 def what():
@@ -304,15 +295,11 @@ def customers():
     customers = Customer.query.filter_by(user_id=current_user.id).all()
     return render_template("customers.html", current_user=current_user, customers=customers)
 
-@app.route("/invoices")
+@app.route("/flash_card_sets")
 @login_required
-def invoices():
-    customers = Customer.query.filter_by(user_id=current_user.id).all()
-    invoices = []
-    for customer in customers:
-        print(customer)
-        invoices.extend(customer.invoices)
-    return render_template("invoices.html", current_user=current_user, invoices=invoices)
+def flash_card_sets():
+    flash_card_sets = FlashCardSet.query.filter_by(user_id=current_user.id).all()
+    return render_template("flash_card_sets.html", current_user=current_user, flash_card_sets=flash_card_sets)
 
 @app.route("/products")
 @login_required
