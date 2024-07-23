@@ -27,6 +27,16 @@
                 </div>
             </form>
         </div>
+        <div class="column is-half is-centered" style="padding: 160px;">
+            <form action="{{ url_for('create_with_ai') }}" method="get">
+                {{ form.csrf_token }}
+                <div class="field">
+                    <div class="control">
+                        <button class="button large is-primary" type="submit">Create with AI</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 {% endblock %}

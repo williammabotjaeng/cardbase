@@ -229,6 +229,36 @@ def create_set():
     
     return render_template("create_set.html", current_user=current_user, form=form)
 
+@app.route("/create_with_ai", methods=["GET", "POST"])
+@login_required
+def create_with_ai():
+    current_user.session_engaged = True
+    form = FlashCardSetForm()
+    if request.method == "POST":
+        print(request.form)
+        user_id = current_user.id
+        set_title = request.form.get("set_title")
+        set_description = request.form.get("set_description")
+        set_creation_date = moment.now().date
+        set_modified_date = moment.now().date
+
+        new_set = FlashCardSet(
+            user_id=user_id,
+            set_title=set_title,
+            set_description=set_description,
+            set_creation_date=set_creation_date,
+            set_modified_date=set_modified_date
+        )
+
+        db.session.add(new_set)
+        db.session.commit()
+
+        print(FlashCardSet.query.filter_by(user_id=user_id).all())
+
+        return redirect(url_for("flash_card_sets"))
+    
+    return render_template("create_with_ai.html", current_user=current_user, form=form)
+
 @app.route("/edit_flash_card_set/<set_id>", methods=["GET", "POST"])
 @login_required
 def edit_flash_card_set(set_id):
