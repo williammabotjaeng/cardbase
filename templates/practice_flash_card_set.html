@@ -1,5 +1,6 @@
 {% extends 'app_layout.html' %}
 {% block content %}
+<div class="is-centered">
 <div class="flashcard-container">
     <div class="flashcard" id="flashcard">
         <div class="front">
@@ -11,10 +12,11 @@
             <p id="definition">Back of the card</p>
         </div>
     </div>
+    <button class="button" id="next-button">Next Card</button>
 </div>
 
-<button id="next-button">Next Card</button>
 <input type="hidden" id="flashcardset" value="{{ flash_card_set_json }}">
+</div>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         var flashcard = document.getElementById('flashcard');
@@ -22,10 +24,10 @@
         var definitionElement = document.getElementById('definition');
         var nextButton = document.getElementById('next-button');
         
-        var flashCardSet = document.getElementById("flashcardset").value;
+        var flashCardSet = JSON.parse(document.getElementById("flashcardset").value);
         console.log(flashCardSet);
 
-        var flashcardEntries = []
+        var flashcardEntries = [...flashCardSet];
 
         var currentCardIndex = 0;
 

@@ -120,12 +120,15 @@
 }
 
 .flashcard-container {
-    width: 300px;
-    height: 200px;
+    width: 60%;
+    height: 300px;
     border: 1px solid #ccc;
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
+    margin: 80px 0px 10px 200px;
+    border-radius: 10px;
     perspective: 1000px; /* Enable 3D perspective */
 }
 .flashcard {
@@ -134,6 +137,7 @@
     position: relative;
     transform-style: preserve-3d; /* Enable 3D transformations */
     transition: transform 0.6s;
+    border: #3da121;
 }
 .flashcard.flipped {
     transform: rotateY(180deg); /* Flip the card */
@@ -143,11 +147,36 @@
     height: 100%;
     position: absolute;
     backface-visibility: hidden; /* Hide the back of the card */
+    border: #3da121;
 }
 .front {
     background-color: #fff;
+    border: 2px groove #3da121;
+    padding: 20px;
+    font-size: 16px;
 }
 .back {
     background-color: #f0f0f0;
     transform: rotateY(180deg); /* Initially hide the back of the card */
+    border: 2px solid #3da121;
+    padding: 20px;
+    font-size: 16px;
+}
+
+#next-button {
+    display: block;
+    background-color: #3da121;
+    color: white;
+}
+
+#term {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#definition {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
 }
