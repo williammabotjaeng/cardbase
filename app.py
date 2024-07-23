@@ -262,26 +262,22 @@ def create_with_ai():
 @app.route("/create_with_youtube", methods=["GET", "POST"])
 @login_required
 def create_with_youtube():
-    # Add your implementation for creating with YouTube here
-    pass
+     return render_template("create_with_youtube.html", current_user=current_user)
 
 @app.route("/create_with_text", methods=["GET", "POST"])
 @login_required
 def create_with_text():
-    # Add your implementation for creating with text here
-    pass
+    return render_template("create_with_text.html", current_user=current_user)
 
 @app.route("/create_with_social_media", methods=["GET", "POST"])
 @login_required
 def create_with_social_media():
-    # Add your implementation for creating with social media here
-    pass
+     return render_template("create_with_social.html", current_user=current_user)
 
 @app.route("/create_with_web_page", methods=["GET", "POST"])
 @login_required
 def create_with_web_page():
-    # Add your implementation for creating with a web page here
-    pass
+     return render_template("create_with_web.html", current_user=current_user)
 
 
 @app.route("/edit_flash_card_set/<set_id>", methods=["GET", "POST"])
