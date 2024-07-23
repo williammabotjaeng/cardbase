@@ -87,24 +87,16 @@ class RegistrationForm(FlaskForm):
     email = StringField('Email', validators=[InputRequired(), Length(min=4, max=100)])
     password = PasswordField('Password', validators=[InputRequired(), Length(min=8, max=64)])
 
-class CustomerForm(FlaskForm):
-    first_name = StringField('First Name', validators=[InputRequired(), Length(min=2, max=100)])
-    last_name = StringField('Last Name', validators=[InputRequired(), Length(min=2, max=100)])
-    email = StringField('Email', validators=[InputRequired(), Length(min=6, max=100)])
-    phone_number = StringField('Phone Number')
-    address = StringField('Address')
-    user_id = StringField('User ID', validators=[InputRequired()])
-    submit = SubmitField('Save Customer')
+class FlashCardSetForm(FlaskForm):
+    set_title = StringField('Set Title', validators=[InputRequired()])
+    set_description = StringField('Set Description', validators=[InputRequired()])
+    submit = SubmitField('Create Set')
 
-class ProductForm(FlaskForm):
-    name = StringField('Name', validators=[InputRequired(), Length(min=2, max=100)])
-    price = StringField('Price', validators=[InputRequired()])
-    description = StringField('Description', validators=[Length(max=200)])
-    category = StringField('Category', validators=[Length(max=50)])
-    image_url = StringField('Image URL', validators=[Length(max=200)])
-    sku_code = StringField('SKU Code', validators=[Length(max=50)])
-    user_id = StringField('User ID')
-    submit = SubmitField('Save Product')
+class FlashCardEntryForm(FlaskForm):
+    flashcard_set_id = StringField('FlashCardSet ID', validators=[InputRequired()])
+    term = StringField('Term', validators=[InputRequired()])
+    definition = StringField('Definition', validators=[InputRequired()])
+    submit = SubmitField('Save Entry')
 
 class ContactUsForm(FlaskForm):
     name = StringField("Name", validators=[DataRequired()])
@@ -202,40 +194,34 @@ def home():
     flashcard_sets = FlashCardSet.query.filter_by(user_id=user_id).all()
     return render_template("home.html", current_user=current_user, flashcard_sets=flashcard_sets)
 
-@app.route("/create_invoice", methods=["GET", "POST"])
+@app.route("/create_set", methods=["GET", "POST"])
 @login_required
-def create_invoice():
+def create_set():
     current_user.session_engaged = True
     print(current_user.session_engaged)
     if request.method == "POST":
-        customer_id = request.form.get("customer_id")
-        invoice_number = request.form.get("invoice_number")
-        invoice_date = request.form.get("invoice_date")
-        total_amount = request.form.get("total_amount")
-        status = request.form.get("status")
-        shipping_address = request.form.get("shipping_address")
-        billing_address = request.form.get("billing_address")
-        payment_method_id = request.form.get("payment_method_id")
+        user_id = current_user.id
+        set_title = request.form.get("set_title")
+        set_description = request.form.get("set_description")
+        set_creation_date = moment.now().date()
+        set_modified_date = moment.now().date()
 
-        new_invoice = Invoice(
-            customer_id=customer_id,
-            invoice_number=invoice_number,
-            invoice_date=invoice_date,
-            total_amount=total_amount,
-            status='Pending',
-            shipping_address=shipping_address,
-            billing_address=billing_address,
-            payment_method_id=payment_method_id
+        new_set = FlashCardSet(
+            user_id=user_id,
+            set_title=set_title,
+            set_description=set_description,
+            set_creation_date=set_creation_date,
+            set_modified_date=set_modified_date
         )
 
-        db.session.add(new_invoice)
+        db.session.add(new_set)
         db.session.commit()
 
-        print(Invoice.query.filter_by(customer_id=customer_id).all())
+        print(FlashCardSet.query.filter_by(user_id=user_id).all())
 
-        return redirect(url_for("invoices"))
+        return redirect(url_for("flash_card_sets"))
     
-    return render_template("create_invoice.html", current_user=current_user)
+    return render_template("create_set.html", current_user=current_user)
 
 @app.route("/create_product", methods=["GET", "POST"])
 @login_required
