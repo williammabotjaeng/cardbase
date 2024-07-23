@@ -28,9 +28,28 @@
     text-align: center;
 }
 
+.save-flashcard-entries {
+    background-color: #3da121;
+    color: white;
+    padding: 5px;
+    border-radius: 10px;
+    margin: 5px;
+}
+
+.save-flashcard-entries:visited, .save-flashcard-entries:hover {
+    color: white;
+}
+
 .main-home {
     justify-content: center;
     align-items: center;
+}
+
+.delete-flashcard-entry {
+    color: white;
+    background-color: red;
+    padding: 5px;
+    margin: 5px;
 }
 
 .layout-footer {

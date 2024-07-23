@@ -60,7 +60,7 @@ class FlashCardSet(db.Model):
     set_creation_date = db.Column(db.Date, nullable=False, default=moment.now().date)
     set_modified_date = db.Column(db.Date, nullable=False, default=moment.now().date, onupdate=moment.now().date)
 
-    entries = db.relationship('FlashCardEntry', backref='flashcard_set', lazy=True)
+    flashcard_entries = db.relationship('FlashCardEntry', backref='flashcard_set', lazy=True)
 
 class FlashCardEntry(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -233,6 +233,7 @@ def create_set():
 @login_required
 def edit_flash_card_set(set_id):
     flash_card_set = FlashCardSet.query.get(set_id)
+    flashcard_entries = flash_card_set.flashcard_entries
     if flash_card_set is None or flash_card_set.user_id != current_user.id:
         flash("Flashcard set not found.")
         return redirect(url_for("flash_card_sets"))
@@ -248,7 +249,7 @@ def edit_flash_card_set(set_id):
         flash("Flashcard set updated successfully.")
         return redirect(url_for("flash_card_sets"))
 
-    return render_template("edit_flash_card_set.html", current_user=current_user, flash_card_set=flash_card_set, form=form)
+    return render_template("edit_flash_card_set.html", current_user=current_user, flash_card_set=flash_card_set, form=form, flashcard_entries=flashcard_entries)
 
 
 @app.route("/practice_flash_card_set/<set_id>")
@@ -274,6 +275,26 @@ def delete_flash_card_set(set_id):
 
     flash("Flashcard set deleted successfully.")
     return redirect(url_for("flash_card_sets"))
+
+@app.route('/save_flashcard_entries', methods=['POST'])
+def save_flashcard_entries():
+    flashcard_entries_data = request.json  # Assuming the data is sent as JSON array
+    saved_entries = []
+
+    for entry_data in flashcard_entries_data:
+        term = entry_data.get('term')
+        definition = entry_data.get('definition')
+        flashcard_set_id = entry_data.get('flashcard_set_id')  # Assuming the flashcard set ID is provided
+
+        flashcard_entry = FlashCardEntry(term=term, definition=definition, flashcard_set_id=flashcard_set_id)
+        db.session.add(flashcard_entry)
+        saved_entries.append({'term': term, 'definition': definition})
+
+    print(FlashCardEntry.query.all())
+
+    db.session.commit()
+    flashcard_set_id = flashcard_entries_data[0].get('flashcard_set_id')  # Assuming the flashcard set ID is the same for all entries
+    return redirect(url_for('edit_flash_card_set', id=flashcard_set_id))
 
 
 @app.route("/create_product", methods=["GET", "POST"])
