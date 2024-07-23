@@ -10,7 +10,7 @@ from wtforms.validators import InputRequired, Length, DataRequired, Email
 from dotenv import load_dotenv
 
 from openai import OpenAI
-
+import json
 import argparse
 
 
@@ -233,7 +233,6 @@ def create_set():
 @login_required
 def edit_flash_card_set(set_id):
     flash_card_set = FlashCardSet.query.get(set_id)
-    flashcard_entries = flash_card_set.flashcard_entries
     if flash_card_set is None or flash_card_set.user_id != current_user.id:
         flash("Flashcard set not found.")
         return redirect(url_for("flash_card_sets"))
@@ -249,7 +248,7 @@ def edit_flash_card_set(set_id):
         flash("Flashcard set updated successfully.")
         return redirect(url_for("flash_card_sets"))
 
-    return render_template("edit_flash_card_set.html", current_user=current_user, flash_card_set=flash_card_set, form=form, flashcard_entries=flashcard_entries)
+    return render_template("edit_flash_card_set.html", current_user=current_user, flash_card_set=flash_card_set, form=form)
 
 
 @app.route("/practice_flash_card_set/<set_id>")
@@ -259,8 +258,11 @@ def practice_flash_card_set(set_id):
     if flash_card_set is None or flash_card_set.user_id != current_user.id:
         flash("Flashcard set not found.")
         return redirect(url_for("flash_card_sets"))
+
+    flash_card_entries = [{'term': entry.term, 'definition': entry.definition} for entry in flash_card_set.flashcard_entries]
+    flash_card_set_json = json.dumps(flash_card_entries)
     
-    return render_template("practice_flash_card_set.html", current_user=current_user, flash_card_set=flash_card_set)
+    return render_template("practice_flash_card_set.html", current_user=current_user, flash_card_set=flash_card_set, flash_card_set_json=flash_card_set_json)
 
 @app.route("/delete_flash_card_set/<set_id>", methods=["POST"])
 @login_required

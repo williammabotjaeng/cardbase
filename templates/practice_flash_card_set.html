@@ -1,0 +1,52 @@
+{% extends 'app_layout.html' %}
+{% block content %}
+<div class="flashcard-container">
+    <div class="flashcard" id="flashcard">
+        <div class="front">
+            <h3>Term</h3>
+            <p id="term">Front of the card</p>
+        </div>
+        <div class="back">
+            <h3>Definition</h3>
+            <p id="definition">Back of the card</p>
+        </div>
+    </div>
+</div>
+
+<button id="next-button">Next Card</button>
+<input type="hidden" id="flashcardset" value="{{ flash_card_set_json }}">
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var flashcard = document.getElementById('flashcard');
+        var termElement = document.getElementById('term');
+        var definitionElement = document.getElementById('definition');
+        var nextButton = document.getElementById('next-button');
+        
+        var flashCardSet = document.getElementById("flashcardset").value;
+        console.log(flashCardSet);
+
+        var flashcardEntries = []
+
+        var currentCardIndex = 0;
+
+        function loadFlashcard(index) {
+            termElement.textContent = flashcardEntries[index].term;
+            definitionElement.textContent = flashcardEntries[index].definition;
+        }
+
+        loadFlashcard(currentCardIndex);
+
+        nextButton.addEventListener('click', function() {
+            currentCardIndex = (currentCardIndex + 1) % flashcardEntries.length;
+            flashcard.classList.remove('flipped'); // Ensure the card is not flipped
+            setTimeout(function() {
+                loadFlashcard(currentCardIndex);
+            }, 300); // Delay the loading of the next card for a smoother transition
+        });
+
+        flashcard.addEventListener('click', function() {
+            flashcard.classList.toggle('flipped'); // Flip the card when clicked
+        });
+    });
+</script>
+{% endblock %}
