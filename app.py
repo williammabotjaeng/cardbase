@@ -199,8 +199,8 @@ CardBase Team"""
 @app.route("/home")
 def home():
     user_id = current_user.id 
-    flashcards = FlashCardsSet.query.filter_by(user_id=user_id).all()
-    return render_template("home.html", current_user=current_user, flashcards_set=flashcards_set)
+    flashcard_sets = FlashCardSet.query.filter_by(user_id=user_id).all()
+    return render_template("home.html", current_user=current_user, flashcard_sets=flashcard_sets)
 
 @app.route("/create_invoice", methods=["GET", "POST"])
 @login_required
