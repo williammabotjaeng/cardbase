@@ -49,27 +49,25 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(100), nullable=False)
      
-    flash_cards = db.relationship('FlashCard', backref='user', lazy=True)
+    flash_card_sets = db.relationship('FlashCardSet', backref='user', lazy=True)
 
 
-
-class FlashCardsSet(db.Model):
+class FlashCardSet(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     set_title = db.Column(db.String(255), nullable=False)
     set_description = db.Column(db.String(255), nullable=False)
-    set_creation_date = db.Column(db.Date, nullable=False, default=datetime.utcnow)
-    set_modified_date = db.Column(db.Date, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
+    set_creation_date = db.Column(db.Date, nullable=False, default=moment.now().date)
+    set_modified_date = db.Column(db.Date, nullable=False, default=moment.now().date, onupdate=moment.now().date)
 
-    entries = db.relationship('FlashCardEntry', backref='flashcard', lazy=True)
+    entries = db.relationship('FlashCardEntry', backref='flashcard_set', lazy=True)
 
 class FlashCardEntry(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     term = db.Column(db.String(255), nullable=False)
     definition = db.Column(db.String(255), nullable=False)
 
-    flashcard_id = db.Column(db.Integer, db.ForeignKey('flash_card.id'), nullable=False)
-
+    flashcard_set_id = db.Column(db.Integer, db.ForeignKey('flash_card_set.id'), nullable=False)
 
 
 with app.app_context():
