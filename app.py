@@ -224,6 +224,53 @@ def create_set():
     
     return render_template("create_set.html", current_user=current_user, form=form)
 
+@app.route("/edit_flash_card_set/<set_id>", methods=["GET", "POST"])
+@login_required
+def edit_flash_card_set(set_id):
+    flash_card_set = FlashCardSet.query.get(set_id)
+    if flash_card_set is None or flash_card_set.user_id != current_user.id:
+        flash("Flashcard set not found.")
+        return redirect(url_for("flash_card_sets"))
+
+    form = FlashCardSetForm()
+    if request.method == "POST":
+        flash_card_set.set_title = request.form.get("set_title")
+        flash_card_set.set_description = request.form.get("set_description")
+        flash_card_set.set_modified_date = moment.now().date
+
+        db.session.commit()
+
+        flash("Flashcard set updated successfully.")
+        return redirect(url_for("flash_card_sets"))
+
+    return render_template("edit_flash_card_set.html", current_user=current_user, flash_card_set=flash_card_set, form=form)
+
+
+@app.route("/practice_flash_card_set/<set_id>")
+@login_required
+def practice_flash_card_set(set_id):
+    flash_card_set = FlashCardSet.query.get(set_id)
+    if flash_card_set is None or flash_card_set.user_id != current_user.id:
+        flash("Flashcard set not found.")
+        return redirect(url_for("flash_card_sets"))
+    
+    return render_template("practice_flash_card_set.html", current_user=current_user, flash_card_set=flash_card_set)
+
+@app.route("/delete_flash_card_set/<set_id>", methods=["POST"])
+@login_required
+def delete_flash_card_set(set_id):
+    flash_card_set = FlashCardSet.query.get(set_id)
+    if flash_card_set is None or flash_card_set.user_id != current_user.id:
+        flash("Flashcard set not found.")
+        return redirect(url_for("flash_card_sets"))
+
+    db.session.delete(flash_card_set)
+    db.session.commit()
+
+    flash("Flashcard set deleted successfully.")
+    return redirect(url_for("flash_card_sets"))
+
+
 @app.route("/create_product", methods=["GET", "POST"])
 @login_required
 def create_product():

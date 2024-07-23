@@ -7,6 +7,12 @@
     color: white;
 }
 
+#flashcardsets-heading {
+    text-align: center;
+    margin: 1%;
+    font-size: 2em;
+}
+
 .empty-state-text {
     margin-top: 10%;
     font-size: larger;
