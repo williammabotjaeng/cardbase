@@ -7,6 +7,22 @@
     color: white;
 }
 
+.empty-state-text {
+    margin-top: 10%;
+    font-size: larger;
+}
+
+.mixed-text {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.main-home {
+    justify-content: center;
+    align-items: center;
+}
+
 .layout-footer {
     position: fixed;
     bottom: 0px;

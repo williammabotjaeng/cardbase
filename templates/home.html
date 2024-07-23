@@ -1,8 +1,21 @@
 {% extends 'app_layout.html' %}
 {% block content %}
-<div style="margin: 10px; color: white">
-    <div class="column tile blue">
-        
-    </div>
+<div style="margin: 10px">
+        <div class="main-home">
+            {% if flash_card_sets %}
+              {% for flash_card_set in flash_card_sets %}
+                <h3>{{ flash_card_set.set_title }}</h3>
+                <p>{{ flash_card_set.set_description }}</p>
+              {% endfor %}
+            {% else %}
+            <div>
+              <p class="text-center empty-state-text">No flash card sets available.</p>
+              <br />
+              <div class="text-center">
+               <button class="button large is-success">Create</button>&nbsp;&nbsp;<p class="mixed-text">your first Flashcard Set!</p>
+              </div>
+            </div>
+            {% endif %}
+          </div>
 </div>
 {% endblock %}
