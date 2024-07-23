@@ -26,6 +26,10 @@
                   {% endfor %}
                 </tbody>
               </table>
+              <br>
+              <div class="is-centered">
+                <a href="{{ url_for('create_set') }}" class="button large is-success">Create</a>
+              </div>
             {% else %}
             <div>
               <p class="text-center empty-state-text">No flash card sets available.</p>

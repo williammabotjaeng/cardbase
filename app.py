@@ -272,11 +272,16 @@ def delete_flash_card_set(set_id):
         flash("Flashcard set not found.")
         return redirect(url_for("flash_card_sets"))
 
+    # Delete all flash_card_entries in the flash_card_set
+    for entry in flash_card_set.flashcard_entries:
+        db.session.delete(entry)
+
     db.session.delete(flash_card_set)
     db.session.commit()
 
     flash("Flashcard set deleted successfully.")
     return redirect(url_for("flash_card_sets"))
+
 
 @app.route('/save_flashcard_entries', methods=['POST'])
 def save_flashcard_entries():
