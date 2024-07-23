@@ -180,3 +180,8 @@
     font-weight: bold;
     text-align: center;
 }
+
+#youtube:hover, #web:hover, #social:hover, #textoption:hover {
+    background-color: #3da121;
+    opacity: 50%;
+}

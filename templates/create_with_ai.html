@@ -1,0 +1,33 @@
+{% extends "app_layout.html" %}
+
+{% block content %}
+<div class="container">
+    <br>
+    <div class="columns" style="margin: 5px;">
+        <div class="column" style="border: 2px solid #3da121;" id="youtube">
+            <a href="{{ url_for('create_with_youtube') }}" class="is-hoverable">
+                <h3 class="title is-3 text-center border">YouTube</h3>
+                <img src="{{ url_for('static', filename='img/youtube.jpg') }}" alt="YouTube Logo" class="responsive-img">
+            </a>
+        </div>
+        <div class="column" style="border: 2px solid #3da121;" id="web">
+            <a href="{{ url_for('create_with_web_page') }}" class="is-hoverable">
+                <h3 class="title is-3 text-center border">Web Page</h3>
+                <img src="{{ url_for('static', filename='img/web.jpg') }}" alt="Web Page Logo" class="responsive-img">
+            </a>
+        </div>
+        <div class="column" style="border: 2px solid #3da121;" id="social">
+            <a href="{{ url_for('create_with_social_media') }}" class="is-hoverable">
+                <h3 class="title is-3 text-center border">Social Media</h3>
+                <img src="{{ url_for('static', filename='img/social.jpg') }}" alt="Social Media Logo" class="responsive-img">
+            </a>
+        </div>
+        <div class="column" style="border: 2px solid #3da121;" id="textoption">
+            <a href="{{ url_for('create_with_text') }}" class="is-hoverable">
+                <h3 class="title is-3 text-center border">Text</h3>
+                <img src="{{ url_for('static', filename='img/text.png') }}" alt="Text Logo" class="responsive-img">
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
