@@ -92,6 +92,11 @@ class FlashCardSetForm(FlaskForm):
     set_description = StringField('Set Description', validators=[InputRequired()])
     submit = SubmitField('Create Set')
 
+class FlashCardSetEditForm(FlaskForm):
+    set_title = StringField('Set Title', validators=[InputRequired()])
+    set_description = StringField('Set Description', validators=[InputRequired()])
+    submit = SubmitField('Update Set')
+
 class FlashCardEntryForm(FlaskForm):
     flashcard_set_id = StringField('FlashCardSet ID', validators=[InputRequired()])
     term = StringField('Term', validators=[InputRequired()])
@@ -232,7 +237,7 @@ def edit_flash_card_set(set_id):
         flash("Flashcard set not found.")
         return redirect(url_for("flash_card_sets"))
 
-    form = FlashCardSetForm()
+    form = FlashCardSetEditForm()
     if request.method == "POST":
         flash_card_set.set_title = request.form.get("set_title")
         flash_card_set.set_description = request.form.get("set_description")
